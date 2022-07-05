@@ -33,7 +33,7 @@ def sign_in(signin_page: str) -> None:
     sleep(randrange(3, 10))
 
 
-def select_invisible():
+def select_invisible() -> None:
     select = Select(driver.find_element(By.ID, 'online'))
     select.select_by_value('invisible')
 
@@ -54,10 +54,7 @@ def get_departments_list() -> List[str]:
     return output
 
 
-def parse_department(deps: List[str]) -> List[List[str]]:
-
-    current_deps = deps
-
+def parse_department(cur_deps: List[str]) -> List[List[str]]:
     root1 = driver.find_element(By.TAG_NAME, 'af-root')
     shadow_root1 = root1.shadow_root
     elements = shadow_root1.find_elements(By.CLASS_NAME, "departments")
@@ -66,7 +63,7 @@ def parse_department(deps: List[str]) -> List[List[str]]:
     page_res = []
     for d in list_of_deps:
         agent_deps = []
-        for dep in current_deps:
+        for dep in cur_deps:
             if d.__contains__(dep):
                 agent_deps.append(dep)
         page_res.append(agent_deps)
